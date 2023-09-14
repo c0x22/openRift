@@ -1,6 +1,7 @@
 import asyncio
 import json
 import logging
+import os
 import random
 from contextvars import ContextVar
 from dataclasses import dataclass
@@ -325,7 +326,8 @@ def truncate_messages(
 
 class OpenAIClient(BaseSettings, AbstractCodeCompletionProvider, AbstractChatCompletionProvider):
     api_key: Optional[SecretStr] = None
-    api_url: str = "https://api.openai.com/v1"
+    api_url: str = os.environ.get("OPENAI_API_BASE")
+    
     default_model: Optional[str] = None
 
     class Config:
